@@ -1,0 +1,44 @@
+fn add(counts: &mut Vec<(String, usize)>, word: &str)
+{
+    for(w,c) in counts.iter_mut()
+    {
+        if w == word 
+        {
+            *c += 1;
+            return;
+        }
+    }
+    counts.push((word.to_string(),1));
+    
+}
+
+fn most_freq(text: &str) -> (String, usize)
+{
+    let mut counts: Vec<(String, usize)> = Vec::new();
+    
+    for w in text.split_whitespace()
+    {
+        add(&mut counts, w);
+    }
+    
+    let mut max_word = String::new();
+    let mut max_count: usize = 0;
+    
+    for(w,c) in counts.iter()
+    {
+        if *c > max_count
+        {
+            max_count = *c;
+            max_word = w.clone();
+        }
+    }
+    (max_word, max_count)
+    
+}
+
+fn main()
+{
+    let text = "the quick brown fox jumps over the lazy dog the quick brown fox";
+    let (word, count) = most_freq(text);
+    println!("Most frequent word: \" {}\" ({}times)", word,count);
+}
